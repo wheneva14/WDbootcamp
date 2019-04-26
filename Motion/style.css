@@ -1,0 +1,84 @@
+body, html {
+    height: 100%;
+    width: 100%;
+}
+body {
+    margin: 0;
+}
+
+#info {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+}
+#info p {
+    margin: 2px 0;
+}
+#virtual {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    perspective: 1000px;
+    background: black;
+}
+
+#box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 200px;
+    width: 200px;
+    /* transition: transform 100ms; */
+    transform-style: preserve-3d;
+    transform: translate(-50%, -50%);
+}
+.side {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    line-height: 200px;
+    font-size: 30px;
+    /* opacity: 0.2; */
+}
+
+.side:nth-child(1) {
+    /* background : #7228FF; */
+    background : url(eye.jpg);
+    background-size: auto 100%;
+    background-position: center;
+}
+.side:nth-child(2) {
+    background : #9D25E8;
+}
+.side:nth-child(3) {
+    background : #E51CFF;
+}
+.side:nth-child(4) {
+    background : #E825B0;
+}
+.side:nth-child(5) {
+    background : #FF2857;
+}
+.side:nth-child(6) {
+    background : #7228FF;
+}
+
+#front {
+    transform: rotate(0) translateZ(100px);
+}
+#left {
+    transform: rotateY(-90deg) translateZ(100px);
+}
+#right {
+    transform: rotateY(90deg) translateZ(100px);
+}
+#top {
+    transform: rotateX(90deg) translateZ(100px);
+}
+#bottom {
+    transform: rotateX(-90deg) translateZ(100px);
+}
+#back {
+    transform: rotateY(180deg) translateZ(100px);
+}

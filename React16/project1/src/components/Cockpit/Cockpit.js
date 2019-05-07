@@ -1,5 +1,5 @@
 import React from "react";
-import Aux from "../../hoc/Aux";
+// import Aux from "../../hoc/Aux";
 
 const cockpit = (props)=> {
     const assignedClasses = [];
@@ -16,7 +16,7 @@ const cockpit = (props)=> {
     }
 
     return (
-        <Aux>
+        <React.Fragment>
             <h1>Hi, I'm RRRRRRRRRApp</h1>
             <p className={assignedClasses.join( ' ' )}>This is really working!</p>
             <button
@@ -24,7 +24,7 @@ const cockpit = (props)=> {
             onClick={props.clicked}>Toggle Persons</button>
             <br></br>
             <button onClick={props.login}>LOG IN</button>
-        </Aux>
+        </React.Fragment>
     )
 }
 

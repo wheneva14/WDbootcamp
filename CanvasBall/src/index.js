@@ -90,6 +90,19 @@ function main() {
                 let radius = (Math.random() * 5)+5;
                 // let x = Math.floor(Math.random() * (window.innerWidth-radius-radius))+radius;
                 // let y = Math.floor(Math.random() * (window.innerHeight-radius-radius))+radius;
+
+                /***  FOR CIRCLE SHAPE
+                let r = Math.random() * 200;
+                let degree = Math.random() * 360;
+                let x = r * Math.cos(degree);
+                let y = r * Math.sin(degree);
+
+                x += window.innerWidth / 2;
+                y += window.innerHeight / 2;
+                *****/
+
+
+
                 let x = (Math.random() * (window.innerWidth/2)) + (window.innerWidth/4) ;
                 let y = (Math.random() * (window.innerHeight/2)) + (window.innerHeight/4) ;
                 let color = ballColor[Math.floor(Math.random() * ballColor.length)];

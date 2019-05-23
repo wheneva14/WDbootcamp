@@ -116,7 +116,7 @@ class ContactData extends React.Component {
         return isValid;
     }
 
-    orderHandler = (event) => {
+    orderHandler = (event, token) => {
         event.preventDefault();
 
         const formData = {};
@@ -127,10 +127,11 @@ class ContactData extends React.Component {
         const order = {
             ingredients: this.props.ings,
             price: this.props.price,
-            orderData: formData
+            orderData: formData,
+            userId: this.props.userId
         }
 
-        this.props.onOrderBurger(order);
+        this.props.onOrderBurger(order, token);
         
     }
 
@@ -167,7 +168,7 @@ class ContactData extends React.Component {
             })
         }
         let form = (
-            <form onSubmit={this.orderHandler}>
+            <form onSubmit={(event) => this.orderHandler(event, this.props.token)}>
                 {formElementsArray.map( formElement => (
                     <Input 
                         key={formElement.id}
@@ -198,13 +199,15 @@ const mapStateToProps = state => {
     return {
         ings: state.burgerBuilder.ingredients,
         price: state.burgerBuilder.totalPrice,
-        loading: state.order.loading
+        loading: state.order.loading,
+        token: state.auth.token,
+        userId: state.auth.userId
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onOrderBurger: (orderData) => dispatch(actions.purchaseBurger(orderData))
+        onOrderBurger: (orderData, token) => dispatch(actions.purchaseBurger(orderData, token))
     }
 }
 

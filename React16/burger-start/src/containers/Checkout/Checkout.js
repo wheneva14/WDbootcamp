@@ -1,12 +1,11 @@
 import React from "react";
 import { connect } from 'react-redux';
 
-import spinner from "../../components/UI/Spinner/Spinner";
+// import spinner from "../../components/UI/Spinner/Spinner";
 import CheckoutSummary from "../../components/Order/CheckoutSummary/CheckoutSummary";
 import { Route, Redirect } from 'react-router-dom';
 import ContactData from './ContactData/ContactData';
 
-import * as actions from '../../store/actions/index';
 
 
 class Checkout extends React.Component {

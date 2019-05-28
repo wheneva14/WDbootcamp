@@ -6,8 +6,10 @@ import BuildControls from "../../components/BuildControls/BuildControls";
 import Modal from "../../components/UI/Modal/Modal";
 import OrderSummary from "../../components/OrderSummary/OrderSummary";
 import axios from "../../axios-orders";
+
 import Spinner from "../../components/UI/Spinner/Spinner";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
+import * as burgerBuilderActions from '../../store/actions/index';
 
 
 
@@ -18,8 +20,8 @@ class BurgerBuilder extends React.Component {
 
         this.state = {
             purchasing: false,
-            loading: false,
-            error: false,
+            // loading: false,
+            // error: false,
         }
     }
 
@@ -35,6 +37,7 @@ class BurgerBuilder extends React.Component {
         // .catch ( error => {
         //     this.setState({error: true})
         // })
+        this.props.onInitIngredients();
     }
 
    
@@ -56,7 +59,12 @@ class BurgerBuilder extends React.Component {
     }
 
     purchaseHandler = () => {
-        this.setState({purchasing: true});
+        if( this.props.isAuthenticated ) {
+            this.setState({purchasing: true});
+        } else {
+            this.props.onSetAuthRedirectPath('/checkout');
+            this.props.history.push('/auth');
+        }
     }
 
     purchaseCancelHandler = () => {
@@ -64,7 +72,7 @@ class BurgerBuilder extends React.Component {
     }
 
     purchaseContinueHandler = () => {
-       
+        this.props.onInitPurchase();
         this.props.history.push("/checkout");
     }
 
@@ -79,9 +87,7 @@ class BurgerBuilder extends React.Component {
         return (
             <React.Fragment>
                 <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
-                    { this.state.loading ? 
-                        <Spinner/>
-                        :
+                    { 
                         this.props.ings ?
                             <OrderSummary 
                                 ingredients={this.props.ings}
@@ -104,10 +110,11 @@ class BurgerBuilder extends React.Component {
                             disabled={disabledInfo}
                             price={this.props.price}
                             purchasable={this.updatePurchaseState(this.props.ings)}
+                            isAuth={this.props.isAuthenticated}
                             ordered={this.purchaseHandler}/>
                     </React.Fragment>
                     :
-                    this.state.error ?
+                    this.props.error ?
                         <p style={{textAlign: "center"}}>Ingredients Cant be loaded!</p>
                         :
                         <Spinner/>
@@ -121,15 +128,20 @@ class BurgerBuilder extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        ings: state.ingredients,
-        price: state.totalPrice
+        ings: state.burgerBuilder.ingredients,
+        price: state.burgerBuilder.totalPrice,
+        error: state.burgerBuilder.error,
+        isAuthenticated: Boolean(state.auth.token)
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onIngredientAdded: (name) => dispatch({type: 'ADD_INGREDIENT', ingredientName: name}),
-        onIngredientRemoved: (name) => dispatch({type: 'REMOVE_INGREDIENT', ingredientName: name}),
+        onIngredientAdded: (name) => dispatch(burgerBuilderActions.addIngredient(name)),
+        onIngredientRemoved: (name) => dispatch(burgerBuilderActions.removeIngredient(name)),
+        onInitIngredients: () => dispatch(burgerBuilderActions.initIngredients()),
+        onInitPurchase: () => dispatch(burgerBuilderActions.purchaseInit()),
+        onSetAuthRedirectPath : (path) => dispatch(burgerBuilderActions.setAuthRedirectPath(path))
     }
 }
 

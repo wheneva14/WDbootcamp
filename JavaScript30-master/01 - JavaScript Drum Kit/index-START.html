@@ -58,6 +58,36 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
+  
+
+  document.addEventListener('keypress', function(event) {
+    const audio = document.querySelector('audio[data-key="'+ event.charCode+'"]');
+    const key = document.querySelector('.key[data-key="'+ event.charCode+'"]');
+    
+    if(audio) {
+      audio.currentTime = 0;
+      audio.play();
+      key.classList.add('playing');
+    }
+    
+  })
+
+  const keys = document.querySelectorAll('.key');
+
+  keys.forEach( function(key) {
+    key.addEventListener('transitionend', function(e) {
+      if(e.propertyName !== 'transform') {
+        return;
+      }
+      this.classList.remove('playing');
+    })
+    key.addEventListener("touchstart", function(e) {
+      const audio = document.querySelector('audio[data-key="'+ this.dataset.key+'"]');
+      audio.currentTime = 0;
+      audio.play();
+      key.classList.add('playing');
+    })
+  })
 
 </script>
 

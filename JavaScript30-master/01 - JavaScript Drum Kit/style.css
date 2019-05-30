@@ -1,6 +1,7 @@
 html {
   font-size: 10px;
-  background: url(http://i.imgur.com/b9r5sEL.jpg) bottom center;
+  /* background: url(http://i.imgur.com/b9r5sEL.jpg) bottom center; */
+  background: #404040;
   background-size: cover;
 }
 
@@ -8,12 +9,13 @@ body,html {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  height: 100%;
 }
 
 .keys {
   display: flex;
   flex: 1;
-  min-height: 100vh;
+  height: 100%;
   align-items: center;
   justify-content: center;
 }

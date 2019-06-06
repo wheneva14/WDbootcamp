@@ -10,7 +10,6 @@
 </head>
 <body>
     <div id='box'>
-        <h2 id='current'>Slide <span></span></h2>
         <div id='carousel'></div>
     </div>
     
@@ -21,8 +20,15 @@
             <button id='next'>next</button>
         </div>
         <div class='wrapper'>
-            <button id='sub'>-</button>
-            <button id='add'>+</button>
+            <button id='hori'>horizontal</button>
+            <button id='vert'>vertical</button>
+        </div>
+        <div class='wrapper'>
+            <!-- <button id='sub'>-</button>
+            <button id='add'>+</button> -->
+            
+                <input class="cells-range" type="range" min="1" max="20" value="4" />
+            
         </div>
         <div id='counter'>X</div>
     </div>

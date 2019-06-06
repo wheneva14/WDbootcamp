@@ -2,47 +2,58 @@ main();
 
 function main() {
 
-    
-    let counter = 4;
+    let cellsRange = document.querySelector('.cells-range');
+    let counter = cellsRange.value;
     let elCount = document.getElementById('counter');
-    let currentSlide = document.querySelector('#current span');
     let deg = 0;
     let radius = 0;
-    const MAX_CELLS = 16;
+    const MAX_CELLS = cellsRange.max;
     let current = 0;
+    let isHorizontal = true;
+    let rotateFn = isHorizontal ? 'rotateY' : 'rotateX';
 
     for( let i = 0; i<MAX_CELLS; i++ ) {
         addCells(i+1);
     }
-
+    let carousel = document.getElementById('carousel');
+    let cellWidth = carousel.offsetWidth;
+    let cellHeight = carousel.offsetHeight;
     updateCounter();
     updateStyles();
 
-    let carousel = document.getElementById('carousel');
+    
 
-
-    document.getElementById('add').addEventListener('click', () => {
-        if(counter < MAX_CELLS) {
-            counter += 1;
-            updateCounter();
-            updateStyles();
-        }
+ 
+    
+    cellsRange.addEventListener( 'change', () => {
+        counter = cellsRange.value;
         
-    })
-    document.getElementById('sub').addEventListener('click', () => {
-        if(counter > 0) {
-            counter -= 1;
-            updateCounter();
-            updateStyles();
-        }
+        updateCounter();
+        updateStyles();
+    });
+    cellsRange.addEventListener( 'input', () => {
+        counter = cellsRange.value;
         
-    })
+        updateCounter();
+        updateStyles();
+    });
 
     document.getElementById('prev').addEventListener('click', () => {
         spin('prev');
     });
     document.getElementById('next').addEventListener('click', () => {
         spin('next');
+    });
+
+    document.getElementById('hori').addEventListener('click', () => {
+        isHorizontal = true;
+        rotateFn = isHorizontal ? 'rotateY' : 'rotateX';
+        updateStyles();
+    });
+    document.getElementById('vert').addEventListener('click', () => {
+        isHorizontal = false;
+        rotateFn = isHorizontal ? 'rotateY' : 'rotateX';
+        updateStyles();
     });
 
 
@@ -56,20 +67,22 @@ function main() {
         let newElement = document.createElement('div');
         newElement.setAttribute('class', 'cell');
         newElement.innerHTML = html;
+        newElement.style.backgroundColor = `hsla(${(360 / 16)*html}, 100%, 50%, 0.5)`;
         p.appendChild(newElement);
     }
 
     function updateStyles() {
         let carousel = document.getElementById('carousel');
         let allCells = document.getElementsByClassName('cell');
+        let size = isHorizontal ? cellWidth : cellHeight;
         deg = 360 / counter;
-        radius = counter <= 2 ? 0 : (220/2) / Math.tan( (deg/2) * Math.PI/180 );
-
-        carousel.style.transform = `translateZ(${-radius}px) rotateY(${-1*current*deg}deg)`;
+        radius = counter <= 2 ? 0 : (size/2) / Math.tan( (deg/2) * Math.PI/180 );
+        current = 0;
+        carousel.style.transform = `translateZ(${-radius}px)`;
 
         for( let i = 0; i<allCells.length ; i++ ) {
             allCells[i].style.opacity = 1;
-            allCells[i].style.transform = `rotateY(${deg*i}deg) translateZ(${radius}px)`;
+            allCells[i].style.transform = `${rotateFn}(${deg*i}deg) translateZ(${radius}px)`;
             
             if(i>=counter) {
                 allCells[i].style.opacity = 0;
@@ -88,7 +101,6 @@ function main() {
             current += 1;
         }
         
-        carousel.style.transform = `translateZ(${-radius}px) rotateY(${-1*current*deg}deg) `;
-        currentSlide.innerText = current;
+        carousel.style.transform = `translateZ(${-radius}px) ${rotateFn}(${-1*current*deg}deg) `;
     }
 }

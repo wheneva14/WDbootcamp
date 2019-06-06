@@ -1,6 +1,7 @@
 html, body {
     margin: 0;
     height: 100%;
+    overflow: hidden;
 }
 body {
     display: flex;
@@ -58,7 +59,7 @@ body {
     width: 100%;
     height: 100%;
     transform-style: preserve-3d;
-    transition: 700ms;
+    transition: 1000ms;
 }
 
 
@@ -78,15 +79,7 @@ body {
     transition: transform 1s, opacity 1s;
     background: #9696966b;
 }
-/* .cell:nth-child(1) {
-    transform: rotateY(0deg) translateZ(95px);
+.cells-range {
+    transform: scale(1.5);
+    margin-top: 10px;
 }
-.cell:nth-child(2) {
-    transform: rotateY(90deg) translateZ(95px);
-}
-.cell:nth-child(3) {
-    transform: rotateY(180deg) translateZ(95px);
-}
-.cell:nth-child(4) {
-    transform: rotateY(270deg) translateZ(95px);
-} */
